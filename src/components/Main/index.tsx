@@ -1,14 +1,27 @@
 'use client'
-import { useRef, useState } from "react"
-export default function Main() {
-    let timeInSeconds = 15
+import { TimerContext } from "@/context/TimerContext"
+import { getTimer } from "@/utils/getDate"
+import { MutableRefObject, useContext, useEffect, useRef} from "react"
 
-    const TimeInSeconds = useRef(0);
-    const intervalRef = useRef(0);
-    let intervalID: string | number | NodeJS.Timeout | null | undefined = null
-
+interface IIntervalRef {
+    intervalRef: MutableRefObject<number>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [time, setTime]: any = useState(timeInSeconds)
+    current?: any
+
+}
+
+export default function Main() {
+    const { time, setTime } = useContext(TimerContext)
+    let { timeInSeconds } = useContext(TimerContext)
+    const TimeInSeconds = useRef(0);
+    const intervalRef: MutableRefObject<number> | IIntervalRef = useRef(0);
+    let intervalID: string | number | NodeJS.Timeout | null | undefined = null
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    
+    useEffect(() => {
+        setTime(getTimer(timeInSeconds))
+    }, [timeInSeconds])
+    // const [time, setTime]: any = useState(getTimer(timeInSeconds))
 
 
     function countDown() {
@@ -18,11 +31,13 @@ export default function Main() {
         }
         timeInSeconds -= 1
         TimeInSeconds.current = timeInSeconds
-        setTime(timeInSeconds)
+
+        setTime(getTimer(timeInSeconds))
     }
 
     function startTimer() {
-        if (intervalID) {
+
+        if (intervalRef.current) {
             stopTimer();
             return;
         }
@@ -33,9 +48,9 @@ export default function Main() {
 
     function stopTimer() {
         timeInSeconds = TimeInSeconds.current
-        setTime(timeInSeconds)
+        setTime(getTimer(timeInSeconds))
         intervalID = intervalRef.current;
-        clearInterval(intervalID)
+        clearInterval(intervalID as number)
         intervalRef.current = null
         intervalID = null
     }
@@ -43,17 +58,13 @@ export default function Main() {
 
 
 
-
-
-    // const newDate = new Date(1500 * 1000)
-    // console.log(newDate.toLocaleTimeString('pt-Br', {minute:'2-digit', second:'2-digit'}))
-    // const formattedTime = newDate.toLocaleTimeString('pt-Br', { minute: '2-digit', second: '2-digit' })
-
     return (
         <main>
-            <h1>{time}</h1>
-            <button onClick={() => startTimer()}>Começar</button>
-            <button onClick={() => stopTimer()}>Parar</button>
+            <section>
+                <h1>{time}</h1>
+                <button onClick={() => startTimer()}>Começar</button>
+                <button onClick={() => stopTimer()}>Parar</button>
+            </section>
         </main>
     )
 }
