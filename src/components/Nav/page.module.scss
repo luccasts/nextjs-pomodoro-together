@@ -1,0 +1,28 @@
+.header {
+    display: flex ;
+    flex-direction: row;
+    height: 50px;
+    background-color: rgb(42, 42, 42);
+    justify-content: space-around;
+    align-items: center;
+
+    div{
+        display: flex;
+    }
+    
+    ul {
+        list-style: none;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        justify-content: center;
+
+        li {
+            display: flex;
+        }
+
+    }
+
+    
+
+}
