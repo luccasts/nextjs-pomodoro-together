@@ -1,7 +1,7 @@
 'use client'
 import { TimerContext } from "@/context/TimerContext"
 import { getTimer } from "@/utils/getDate"
-import { MutableRefObject, useContext, useEffect, useRef} from "react"
+import { MutableRefObject, useContext, useEffect, useRef } from "react"
 
 interface IIntervalRef {
     intervalRef: MutableRefObject<number>
@@ -12,27 +12,27 @@ interface IIntervalRef {
 
 export default function Main() {
     const { time, setTime } = useContext(TimerContext)
-    let { timeInSeconds } = useContext(TimerContext)
     const TimeInSeconds = useRef(0);
     const intervalRef: MutableRefObject<number> | IIntervalRef = useRef(0);
     let intervalID: string | number | NodeJS.Timeout | null | undefined = null
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    
+    const { timeInSeconds, setTimeInSeconds } = useContext(TimerContext)
+
     useEffect(() => {
         setTime(getTimer(timeInSeconds))
+        console.log(timeInSeconds)
     }, [timeInSeconds])
     // const [time, setTime]: any = useState(getTimer(timeInSeconds))
 
-
+    let count = timeInSeconds
     function countDown() {
-        if (0 >= timeInSeconds) {
-            stopTimer()
+        if (0 >= count) {
+            stopTimer();
             return;
         }
-        timeInSeconds -= 1
-        TimeInSeconds.current = timeInSeconds
-
-        setTime(getTimer(timeInSeconds))
+        count -= 1;
+        setTimeInSeconds(count);
+        TimeInSeconds.current = count;
     }
 
     function startTimer() {
@@ -47,8 +47,7 @@ export default function Main() {
 
 
     function stopTimer() {
-        timeInSeconds = TimeInSeconds.current
-        setTime(getTimer(timeInSeconds))
+        setTime(getTimer(TimeInSeconds.current))
         intervalID = intervalRef.current;
         clearInterval(intervalID as number)
         intervalRef.current = null

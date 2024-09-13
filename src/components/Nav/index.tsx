@@ -19,7 +19,6 @@ export default function Nav() {
     
 
     function showModal () {
-        console.log('CLIQUEI')
         setIsOpenModal(true)
     }
 

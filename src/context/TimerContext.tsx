@@ -7,11 +7,12 @@ TimerContext.displayName = "Timer"
 
 export default function TimerProvider ({children}:any) {
     const [time, setTime] = useState()
-    const [ttimeInSeconds, setTimeInSeconds] = useState()
-    let timeInSeconds = 300
+    const [timeInSeconds, setTimeInSeconds] = useState(300)
 
     return (
-        <TimerContext.Provider value={{time, setTime, timeInSeconds}}>
+        <TimerContext.Provider value={{
+            time, setTime, 
+            setTimeInSeconds, timeInSeconds}}>
             {children}
         </TimerContext.Provider>
     )
