@@ -8,11 +8,19 @@ TimerContext.displayName = "Timer"
 export default function TimerProvider ({children}:any) {
     const [time, setTime] = useState()
     const [timeInSeconds, setTimeInSeconds] = useState(300)
-
+    const [timer, setTimer] = useState('pomodoro')
+    const [pomodoroTimer, setPomodoroTimer] = useState(1500);
+    const [longTimer, setLongTimer] = useState(900)
+    const [shortTimer, setShortTimer] = useState(300)
     return (
         <TimerContext.Provider value={{
             time, setTime, 
-            setTimeInSeconds, timeInSeconds}}>
+            setTimeInSeconds, timeInSeconds,
+            timer,setTimer,
+            pomodoroTimer, setPomodoroTimer,
+            longTimer, setLongTimer,
+            shortTimer, setShortTimer
+            }}>
             {children}
         </TimerContext.Provider>
     )

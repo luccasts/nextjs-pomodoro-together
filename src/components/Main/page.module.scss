@@ -1,0 +1,18 @@
+.main {
+
+    &__div {
+        display: flex;
+        gap: 16px;
+        font-size: 14px;
+
+        button {
+            background-color: transparent;
+            border: none;
+
+            &:active {
+                position: relative;
+                top: 1px;
+            }
+        }
+    }
+}
