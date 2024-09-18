@@ -1,5 +1,7 @@
 .main {
-
+    display: flex;
+    justify-content: center;
+    
     &__div {
         display: flex;
         gap: 16px;

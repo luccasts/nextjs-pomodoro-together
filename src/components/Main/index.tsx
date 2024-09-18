@@ -1,27 +1,45 @@
 'use client'
 import { TimerContext } from "@/context/TimerContext"
-import { useContext} from "react"
+import { useContext } from "react"
 import Timers from "../Timers"
 import styles from './page.module.scss'
 
 
+
 export default function Main() {
 
-    const { timer, setTimer } = useContext(TimerContext)
+    const {
+        setTypeTimer,
+        intervalRef
+
+    } = useContext(TimerContext)
+
+    let { intervalID } = useContext(TimerContext)
+
     function clickPomodoro() {
-        setTimer('pomodoro')
+        setTypeTimer('pomodoroTimer')
+        stopTimer()
+
     }
 
     function clickShort() {
-        setTimer('shortTimer')
+        setTypeTimer('shortTimer')
+        stopTimer()
     }
 
     function clickLong() {
-        setTimer('longTimer')
+        setTypeTimer('longTimer')
+        stopTimer()
     }
 
+    function stopTimer() {
+        intervalID = intervalRef.current;
+        clearInterval(intervalID as number)
+        intervalRef.current = null
+        intervalID = null
+    }
 
-    return (
+    return ( 
         <main className={styles.main}>
             <section>
                 <div className={styles.main__div}>
@@ -29,7 +47,8 @@ export default function Main() {
                     <button onClick={() => clickShort()}>Descanso Curto</button>
                     <button onClick={() => clickLong()}>Descanso Longo</button>
                 </div>
-                <Timers method={timer} />
+                <Timers />
+
 
             </section>
         </main>

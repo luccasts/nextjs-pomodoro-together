@@ -27,7 +27,7 @@ export default function Modal() {
 
     //form button
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [isDisabled, setIsDisabled]:any = useState()
+    const [isDisabled, setIsDisabled]: any = useState()
 
     function handleTimeInMinutesOrSeconds(time, type) {
         switch (type) {
@@ -47,28 +47,35 @@ export default function Modal() {
         setLongTimerInputValue(handleTimeInMinutesOrSeconds(longTimer, 'divide'))
     }, [])
 
-    function verifyTimer(v) {
+    function handleSetTimer(v) {
         v.preventDefault()
+        if (pomodoroTimerInputValue != pomodoroTimer) {
+            console.log('diferente pomodoro')
+            //setPomodoroTimer(handleTimeInMinutesOrSeconds(pomodoroTimerInputValue,'multiplication'))
+        }
+        
+        if (longTimerInputValue != longTimer) {
+            console.log('diferente long')
+            //setLongTimer(handleTimeInMinutesOrSeconds(longTimerInputValue,'multiplication'))
+        }
 
-
-        // const seconds = valueInput * 60
-        // setTimeInSeconds(seconds)
-        // // getTimer(e.target.value)
-
-        // setIsOpenModal(false)
+        if (shortTimerInputValue != shortTimer) {
+            console.log('diferente short')
+            //setShortTimer(handleTimeInMinutesOrSeconds(shortTimerInputValue, 'multiplication'))
+        }
+        setIsOpenModal(false)
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    function validateLength(input: any, type: any) {
-        if(input === ''  || input  == 0){
+    function validateInput(input: any, type: any) {
+        if (input === '' || input == 0) {
             setIsDisabled(true)
-        }else if (input !== 0) {
+        } else if (input !== 0) {
             setIsDisabled(false)
         }
         const maxLength = 3
 
         if (input >= 0 && input.length <= maxLength) {
-           
             switch (type) {
                 case 'pomodoro':
                     setPomodoroTimerInputValue(input)
@@ -100,14 +107,14 @@ export default function Modal() {
 
                     <form>
                         <label htmlFor='pomodoro'>Pomodoro</label>
-                        <input id='pomodoro' type="number" value={pomodoroTimerInputValue} name="" onChange={(v) => validateLength(v.target.value, 'pomodoro')} />
-                        
+                        <input id='pomodoro' type="number" value={pomodoroTimerInputValue} name="" onChange={(v) => validateInput(v.target.value, 'pomodoro')} />
+
                         <label htmlFor="shortTimer">Pausa Curta</label>
-                        <input id='shortTimer' type="number" value={shortTimerInputValue} name="" onChange={(v) => validateLength(v.target.value, 'shortTimer')} />
+                        <input id='shortTimer' type="number" value={shortTimerInputValue} name="" onChange={(v) => validateInput(v.target.value, 'shortTimer')} />
                         <label htmlFor="longTimer">Pausa Longa</label>
-                        <input id='longTimer' type="number" value={longTimerInputValue} name="" onChange={(v) => validateLength(v.target.value, 'longTimer')} />
+                        <input id='longTimer' type="number" value={longTimerInputValue} name="" onChange={(v) => validateInput(v.target.value, 'longTimer')} />
                         <div>
-                            <button disabled={isDisabled} onClick={(e) => verifyTimer(e)}>Aplicar</button>
+                            <button disabled={isDisabled} onClick={(e) => handleSetTimer(e)}>Aplicar</button>
                         </div>
                     </form>
                 </div>
