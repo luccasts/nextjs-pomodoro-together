@@ -29,7 +29,7 @@ export default function Modal() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [isDisabled, setIsDisabled]: any = useState()
 
-    function handleTimeInMinutesOrSeconds(time, type) {
+    function handleTimeInMinutesOrSeconds(time:number, type:string):number {
         switch (type) {
             case 'divide':
                 return time / 60
@@ -47,19 +47,20 @@ export default function Modal() {
         setLongTimerInputValue(handleTimeInMinutesOrSeconds(longTimer, 'divide'))
     }, [])
 
-    function handleSetTimer(v) {
+    function handleSetTimer(v: MouseEvent) {
         v.preventDefault()
-        if (pomodoroTimerInputValue != pomodoroTimer) {
+        if (pomodoroTimerInputValue !== pomodoroTimer) {
             console.log('diferente pomodoro')
+            console.log(pomodoroTimerInputValue +'pomodoroInput  ' + pomodoroTimer+ 'pomoroTimer')
             //setPomodoroTimer(handleTimeInMinutesOrSeconds(pomodoroTimerInputValue,'multiplication'))
         }
         
-        if (longTimerInputValue != longTimer) {
+        if (longTimerInputValue !== longTimer) {
             console.log('diferente long')
             //setLongTimer(handleTimeInMinutesOrSeconds(longTimerInputValue,'multiplication'))
         }
 
-        if (shortTimerInputValue != shortTimer) {
+        if (shortTimerInputValue !== shortTimer) {
             console.log('diferente short')
             //setShortTimer(handleTimeInMinutesOrSeconds(shortTimerInputValue, 'multiplication'))
         }

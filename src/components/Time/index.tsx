@@ -3,9 +3,11 @@ import { TimerContext } from "@/context/TimerContext"
 import { getTimer } from "@/utils/getDate"
 import { MutableRefObject, useContext, useEffect, useRef, useState } from "react"
 import styles from './page.module.scss'
+import { AiOutlineLoading, AiOutlineLoading3Quarters } from "react-icons/ai"
+import Loading from "../Loading"
 
 export default function Time() {
-    
+
     const { time, setTime,
         timeInSeconds, setTimeInSeconds,
         timeInSecondsRef,
@@ -16,8 +18,8 @@ export default function Time() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     // let intervalID: string | number | NodeJS.Timeout | null | undefined = null
 
-    
-    
+
+
     useEffect(() => {
         setTime(getTimer(timeInSeconds))
     }, [timeInSeconds])
@@ -55,9 +57,13 @@ export default function Time() {
         intervalID = null
     }
     return (
-        <div className={styles.time}>
-            <h1>{time}</h1>
-            <button onClick={() => startTimer()}> {isStarButton ? "Começar" : "Pausar "}</button>
+        <div>
+            {time ? null  : <Loading /> }
+        
+            <div className={styles.time}>
+                <h1>{time}</h1>
+                <button onClick={() => startTimer()}> {isStarButton ? "Começar" : "Pausar "}</button>
+            </div>
         </div>
     )
 }

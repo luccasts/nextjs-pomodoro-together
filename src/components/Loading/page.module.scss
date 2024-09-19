@@ -1,0 +1,20 @@
+@keyframes rotateCenter {
+    from{
+        transform: rotate(0);
+    }
+
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+.div_loading{
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+    .outlineLoading{
+        animation: rotateCenter 1s ease-in-out infinite both;
+    }
+    
+
+}
