@@ -24,6 +24,7 @@ export default function Timers() {
     useEffect(() => {
         switch (typeTimer) {
             case 'pomodoroTimer':
+                console.log(typeTimer + 'rodou ooooooo' +  pomodoroTimer +'pomodoro')
                 setTimeInSeconds(pomodoroTimer)
                 setIsStarButton(true)
                 setTypeTimer(null)

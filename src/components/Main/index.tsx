@@ -48,8 +48,6 @@ export default function Main() {
                     <button onClick={() => clickLong()}>Descanso Longo</button>
                 </div>
                 <Timers />
-
-
             </section>
         </main>
     )

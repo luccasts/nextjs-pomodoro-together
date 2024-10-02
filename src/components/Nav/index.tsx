@@ -7,18 +7,19 @@ import { FaUserFriends } from "react-icons/fa";
 
 import { useContext } from "react";
 import { ModalContext } from "@/context/ModalContext";
+import Link from "next/link";
 
 
 
 
 
 export default function Nav() {
-    const { setIsOpenModal} = useContext(ModalContext)
+    const { setIsOpenModal } = useContext(ModalContext)
 
 
-    
 
-    function showModal () {
+
+    function showModal() {
         setIsOpenModal(true)
     }
 
@@ -32,12 +33,12 @@ export default function Nav() {
             <nav>
                 <ul>
                     <li><FaUserFriends />
-                    Amigos</li>
+                        Amigos</li>
                     <li><HiDocumentReport />
                         Relatório</li>
-                        
-                    <li onClick={() => showModal()}><AiFillSetting/>Configurações</li>
-                    <li><AiOutlineUser />
+
+                    <li onClick={() => showModal()}><AiFillSetting />Configurações</li>
+                    <li><Link href={'/registrar'} ><AiOutlineUser /></Link>
                     </li>
                 </ul>
             </nav>
