@@ -37,3 +37,6 @@ next-env.d.ts
 
 # to-do-list
 todo.md
+
+#firebase
+firebase.ts

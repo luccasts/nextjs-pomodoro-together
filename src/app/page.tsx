@@ -1,21 +1,10 @@
-import Nav from "@/components/Nav";
 import styles from "./page.module.css";
-import Main from "@/components/Main";
-import ModalProvider from "@/context/ModalContext";
-import Modal from "@/components/Modal";
-import TimerProvider from "@/context/TimerContext";
+import Home from "@/pages/Home";
 
-
-export default function Home() {
+export default function Page() {
   return (
     <div className={styles.page}>
-      <ModalProvider>
-        <TimerProvider>
-          <Nav />
-          <Main />
-          <Modal />
-        </TimerProvider>
-      </ModalProvider>
+        <Home />
     </div>
   );
 }

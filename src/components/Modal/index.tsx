@@ -1,14 +1,14 @@
 'use client'
 import { useContext, useEffect, useState } from 'react'
 import styles from './page.module.scss'
-import { ModalContext } from '@/context/ModalContext'
+import { useModalContext } from '@/context/ModalContext'
 import { TimerContext } from '@/context/TimerContext'
 import { AiOutlineClose } from 'react-icons/ai'
 
 
 export default function Modal() {
     //Open / Close Modal 
-    const { isOpenModal, setIsOpenModal } = useContext(ModalContext)
+    const { isOpenModal, setIsOpenModal , isOpenUserModal} = useModalContext()
 
     //Timers
     const { pomodoroTimer, setPomodoroTimer,
@@ -95,9 +95,9 @@ export default function Modal() {
                 default:
                     break
             }
-
         }
     }
+   
     return (
         <div style={isOpenModal ? { display: 'flex' } : { display: 'none' }} className={styles.backgroundModal}>
             <div className={styles.modal}>

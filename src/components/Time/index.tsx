@@ -62,7 +62,7 @@ export default function Time() {
         
             <div className={styles.time}>
                 <h1>{time}</h1>
-                <button onClick={() => startTimer()}> {isStarButton ? "Começar" : "Pausar "}</button>
+                <button className={styles.start_button} onClick={() => startTimer()}> {isStarButton ? "Começar" : "Pausar "}</button>
             </div>
         </div>
     )

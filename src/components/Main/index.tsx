@@ -5,7 +5,6 @@ import Timers from "../Timers"
 import styles from './page.module.scss'
 
 
-
 export default function Main() {
 
     const {
@@ -38,7 +37,7 @@ export default function Main() {
         intervalRef.current = null
         intervalID = null
     }
-
+    
     return ( 
         <main className={styles.main}>
             <section>
