@@ -1,21 +1,16 @@
-.userModal{
-    display: flex;
-    flex-direction: column;
-    gap:8px;
-    background-color: rgb(110, 110, 110);
-    border-radius: .4rem;
-    padding: .4rem;
-
-    li{
-        padding: .4rem;
-        font-size: .8rem;
-        text-transform: uppercase;
+.userModal {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--background-user-modal);
+  border-radius: 0.4rem;
+  padding: 0.4rem;
+  ul {
+    li {
+      padding: 0.4rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      border-radius: 0.4rem;
     }
-    li:hover{
-        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-        // background-color: rgb(147, 147, 147);
-        border-radius: .3rem;
-        cursor: pointer;
-        
-    }
+  }
 }

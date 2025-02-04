@@ -1,53 +1,53 @@
-'use client'
-import { TimerContext } from "@/context/TimerContext"
-import { useContext } from "react"
-import Timers from "../Timers"
-import styles from './page.module.scss'
-
+"use client";
+import { TimerContext } from "@/context/TimerContext";
+import { useContext } from "react";
+import Timers from "../Timers";
+import styles from "./page.module.scss";
+import Button from "../ui/button";
 
 export default function Main() {
+  const { setTypeTimer, intervalRef } = useContext(TimerContext);
 
-    const {
-        setTypeTimer,
-        intervalRef
+  let { intervalID } = useContext(TimerContext);
 
-    } = useContext(TimerContext)
+  function clickPomodoro() {
+    setTypeTimer("pomodoroTimer");
+    stopTimer();
+  }
 
-    let { intervalID } = useContext(TimerContext)
+  function clickShort() {
+    setTypeTimer("shortTimer");
+    stopTimer();
+  }
 
-    function clickPomodoro() {
-        setTypeTimer('pomodoroTimer')
-        stopTimer()
+  function clickLong() {
+    setTypeTimer("longTimer");
+    stopTimer();
+  }
 
-    }
+  function stopTimer() {
+    intervalID = intervalRef.current;
+    clearInterval(intervalID as number);
+    intervalRef.current = null;
+    intervalID = null;
+  }
 
-    function clickShort() {
-        setTypeTimer('shortTimer')
-        stopTimer()
-    }
-
-    function clickLong() {
-        setTypeTimer('longTimer')
-        stopTimer()
-    }
-
-    function stopTimer() {
-        intervalID = intervalRef.current;
-        clearInterval(intervalID as number)
-        intervalRef.current = null
-        intervalID = null
-    }
-    
-    return ( 
-        <main className={styles.main}>
-            <section>
-                <div className={styles.main__div}>
-                    <button onClick={() => clickPomodoro()}>Pomodoro</button>
-                    <button onClick={() => clickShort()}>Descanso Curto</button>
-                    <button onClick={() => clickLong()}>Descanso Longo</button>
-                </div>
-                <Timers />
-            </section>
-        </main>
-    )
+  return (
+    <main className={styles.main}>
+      <section>
+        <div className={styles.main__button}>
+          <Button className="hover_white" onClick={() => clickPomodoro()}>
+            Pomodoro
+          </Button>
+          <Button className="hover_white" onClick={() => clickShort()}>
+            Descanso Curto
+          </Button>
+          <Button className="hover_white" onClick={() => clickLong()}>
+            Descanso Longo
+          </Button>
+        </div>
+        <Timers />
+      </section>
+    </main>
+  );
 }

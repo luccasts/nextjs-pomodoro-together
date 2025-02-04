@@ -1,16 +1,8 @@
 'use client'
 import { TimerContext } from "@/context/TimerContext"
-import { getTimer } from "@/utils/getDate"
-import { MutableRefObject, useContext, useEffect, useRef } from "react"
-
-import styles from './page.module.scss'
+import { useContext, useEffect } from "react"
 import Time from "../Time"
-interface IIntervalRef {
-    intervalRef: MutableRefObject<number>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    current?: any
-}
-
+import styles from './page.module.scss'
 
 export default function Timers() {
     const {
@@ -21,10 +13,10 @@ export default function Timers() {
         shortTimer,
         setIsStarButton
     } = useContext(TimerContext)
+
     useEffect(() => {
         switch (typeTimer) {
             case 'pomodoroTimer':
-                console.log(typeTimer + 'rodou ooooooo' +  pomodoroTimer +'pomodoro')
                 setTimeInSeconds(pomodoroTimer)
                 setIsStarButton(true)
                 setTypeTimer(null)
@@ -47,6 +39,8 @@ export default function Timers() {
 
 
     return (
-        <Time />
+        <div className={styles.timers}>
+            <Time />
+        </div>
     )
 }

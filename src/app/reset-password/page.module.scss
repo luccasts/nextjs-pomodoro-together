@@ -6,7 +6,7 @@
   align-items: center;
 
   .containerForm {
-    background-color: var(--background-main-register);
+    background-color: var(--background-main-reset);
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     padding: 2rem;
     border-radius: 0.5rem;
@@ -17,10 +17,6 @@
     gap: 1rem;
     flex-direction: column;
 
-    h1 {
-      font-size: 1.5rem;
-      text-transform: capitalize;
-    }
     .success {
       color: green;
       margin-top: 1rem;
@@ -42,9 +38,14 @@
         display: flex;
         flex-direction: column;
       }
+
       input {
         width: 300px;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #222;
       }
+
       button {
         width: 100%;
         margin: auto auto;

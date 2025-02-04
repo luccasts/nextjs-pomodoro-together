@@ -39,4 +39,4 @@ next-env.d.ts
 todo.md
 
 #firebase
-firebase.ts
+src/lib/firebase.ts

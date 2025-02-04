@@ -1,38 +1,37 @@
 .header {
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  background-color: var(--background-header);
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  div {
     display: flex;
-    flex-direction: row;
-    height: 50px;
-    background-color: rgb(42, 42, 42);
-    justify-content: space-around;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 16px;
     align-items: center;
-
-    div {
-        display: flex;
+    justify-content: center;
+    .liSlowHover {
+      display: flex;
+      transition: transform 0.5s;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.02);
+      }
     }
 
-    ul {
-        list-style: none;
-        display: flex;
-        gap: 16px;
-        align-items: center;
-        justify-content: center;
-
-        li {
-            display: flex;
-        }
-
-
-
-        .userModal {
-            position: relative;
-            .userModalAbsolute {
-                position: absolute;
-                top: 35px;
-                right: 0;
-            }
-        }
+    .userModal {
+      position: relative;
+      .userModalAbsolute {
+        position: absolute;
+        top: 35px;
+        right: 0;
+      }
     }
-
-
-
+  }
 }

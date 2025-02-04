@@ -1,26 +1,44 @@
 .main {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 50px);
+  justify-content: center;
+  align-items: center;
+
+  section {
     display: flex;
+    gap: 16px;
+    flex-direction: column;
+    background-color: var(--background-pomodoro-timers);
+    padding: 2rem;
+    border-radius: 0.5rem;
+  }
+  &__button {
+    display: flex;
+    gap: 16px;
+    font-size: 14px;
+    flex-wrap: wrap;
     justify-content: center;
 
-    section {
-        display: flex;
-        gap: 16px;
-        flex-direction: column;
-       
+    button {
+      color: var(--color-button-pomodoro);
+      background-color: var(--background-button-pomodoro);
+      border: none;
+      font-size: 2rem;
+      display: flex;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      transition: transform 50ms;
+      &:hover {
+        background-color: var(--background-button-pomodoro-hover);
+        color: var(--color-button-pomodoro-hover);
+        cursor: pointer;
+        transform: scale(1.02);
+      }
+      &:active {
+        position: relative;
+        top: 1px;
+      }
     }
-    &__div {
-        display: flex;
-        gap: 16px;
-        font-size: 14px;
-
-        button {
-            background-color: transparent;
-            border: none;
-
-            &:active {
-                position: relative;
-                top: 1px;
-            }
-        }
-    }
+  }
 }

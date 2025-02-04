@@ -1,64 +1,117 @@
-"use client"
-import { app } from "@/lib/firebase"
-import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from "firebase/auth"
-import Link from "next/link"
-import { FormEvent, useState } from "react"
-import styles from './page.module.scss'
+"use client";
+import { app, db } from "@/lib/firebase";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  sendEmailVerification,
+} from "firebase/auth";
+import Link from "next/link";
+import { FormEvent, useState } from "react";
+import styles from "./page.module.scss";
+import { FirebaseError } from "firebase/app";
+import Button from "@/components/ui/button";
+import Input from "@/components/ui/input";
+import { doc, setDoc } from "firebase/firestore";
+import { registerUser } from "@/utils/registerUser";
 export default function Registrar() {
+  const [inputUserValue, setInputUserValue] = useState("");
+  const [inputEmailValue, setInputEmailValue] = useState("");
+  const [inputPasswordValue, setInputPasswordValue] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  async function validateEmail(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const auth = getAuth(app);
 
+    try {
+      // await registerUser(inputUserValue, inputEmailValue, inputPasswordValue)
+      // const usersRef = collection(db, "users");
+      // const q = query(usersRef, where("name", "==", inputUserValue));
+      // const querySnapshot = await getDocs(q);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        inputEmailValue,
+        inputPasswordValue
+      );
 
-    const [inputEmailValue, setinputEmailValue] = useState("")
-    const [inputPasswordValue, setinputPasswordValue] = useState("")
-    const [inputUserValue, setinputUserValue] = useState("")
-    const [message, setMessage] = useState("");
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    async function validateEmail(e: FormEvent<HTMLFormElement>) {
-        e.preventDefault()
-        const auth = getAuth(app);
-        
-            createUserWithEmailAndPassword(auth, inputEmailValue, inputPasswordValue)
-                .then((userCredential) => {
-                    // The link was successfully sent. Inform the user.
-                    // Save the email locally so you don't need to ask the user for it again
-                    // if they open the link on the same device.
-                    const user = userCredential.user;
-                    sendEmailVerification(user);
-                    setMessage("Conta criada com sucesso! Verifique seu e-mail para ativá-la.");
-
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    return <div>
-                        <h1>{errorCode} - {errorMessage}</h1>
-                    </div>
-                });
-
+      const user = userCredential.user;
+      await sendEmailVerification(user);
+      // await setDoc(doc(db, "users", user.uid), {
+      //   name: inputUserValue,
+      //   totalStudyTime: 0, // Pode usar para rastrear o tempo de estudo
+      //   createdAt: new Date(),
+      // });
+      setMessage(
+        "Conta criada com sucesso! Verifique seu e-mail para ativá-la."
+      );
+      setErrorMessage(null);
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        setErrorMessage(`Erro: ${error.code} - ${error.message}`);
+      } else {
+        setErrorMessage("Ocorreu um erro inesperado. Tente novamente.");
+      }
+      setMessage(null);
     }
-    return (
+  }
+  return (
+    <main className={styles.main}>
+      <div className={styles.containerForm}>
+        <h1>Criar conta</h1>
+        <form onSubmit={(e) => validateEmail(e)}>
+          <label htmlFor="user">
+            User:
+            <Input
+              value={inputUserValue || ""}
+              onChange={(e) => setInputUserValue(e.target.value)}
+              id="user"
+              type="user"
+              placeholder="Informe o seu User"
+              required
+            />
+          </label>
+          <label htmlFor="email">
+            E-mail:
+            <Input
+              value={inputEmailValue || ""}
+              onChange={(e) => setInputEmailValue(e.target.value)}
+              id="email"
+              type="email"
+              placeholder="Informe o seu E-mail"
+              required
+            />
+          </label>
 
-        <main className={styles.main}>
-            <div className={styles.containerForm}>
-                <h1>Criar conta</h1>
-                <form onSubmit={(e) => validateEmail(e)}>
-                    <label htmlFor="user">Usuário:
-                        <input value={inputUserValue || ""} onChange={(e) => setinputUserValue(e.target.value)} id="user" type="user" placeholder="Informe o seu usuário" /></label>
-                    <label htmlFor="email">E-mail:
-                        <input value={inputEmailValue || ""} onChange={(e) => setinputEmailValue(e.target.value)} id="email" type="email" placeholder="Informe o seu E-mail" /></label>
+          <label htmlFor="password">
+            Senha:
+            <Input
+              value={inputPasswordValue || ""}
+              onChange={(e) => setInputPasswordValue(e.target.value)}
+              minLength={6}
+              id="password"
+              type="password"
+              placeholder="Informe sua senha "
+              required
+            />
+          </label>
 
-                    <label htmlFor="email">Senha:
-                        <input value={inputPasswordValue || ""} onChange={(e) => setinputPasswordValue(e.target.value)} id="password" type="password" placeholder="Informe sua senha " /></label>
+          <Button
+            className="hover_transparent"
+            fontSize="14px"
+            textTransform="uppercase"
+          >
+            Criar Conta
+          </Button>
+        </form>
 
-                    <button disabled={inputEmailValue.length > 3 && inputPasswordValue.length >= 6 ? false : true}>Criar Conta</button>
-                </form>
-                {/* Exibição de mensagens */}
-                {message && <p className={styles.success}>{message}</p>}
-                {errorMessage && <p className={styles.error}>{errorMessage}</p>}
-                <Link href={'/login'} >
-                    Já tem uma conta? <strong>Logar-se</strong>
-                </Link>
-            </div>
-        </main>
+        {/* Exibição de mensagens */}
+        {message && <p className={styles.success}>{message}</p>}
+        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
 
-    )
+        <Link href={"/login"}>
+          Já tem uma conta? <strong>Logar-se</strong>
+        </Link>
+      </div>
+    </main>
+  );
 }
