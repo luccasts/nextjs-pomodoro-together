@@ -1,5 +1,5 @@
 "use client";
-import { app, db } from "@/lib/firebase";
+import { app, db } from "../../../firebase";
 import {
   createUserWithEmailAndPassword,
   getAuth,

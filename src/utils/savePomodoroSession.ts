@@ -1,4 +1,4 @@
-import { auth, db } from "@/lib/firebase";
+import { auth, db } from "../../firebase";
 import { addDoc, collection, doc } from "firebase/firestore";
 
 export async function savePomodoroSession(duration: number) {

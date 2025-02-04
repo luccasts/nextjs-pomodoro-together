@@ -1,5 +1,5 @@
 "use client";
-import { app } from "@/lib/firebase";
+import { app } from "../../../firebase";
 import {
   getAuth,
   sendEmailVerification,

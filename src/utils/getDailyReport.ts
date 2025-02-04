@@ -1,5 +1,5 @@
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { auth, db } from "@/lib/firebase";
+import { auth, db } from "../../firebase";
 
 export async function getDailyReport() {
   const user = auth.currentUser;
