@@ -1,18 +1,12 @@
 "use client";
-import { app } from "../../../firebase";
-import {
-  getAuth,
-  sendEmailVerification,
-  signInWithEmailAndPassword,
-  User,
-} from "firebase/auth";
+import { sendEmailVerification, User } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import styles from "./page.module.scss";
-import { FirebaseError } from "firebase/app";
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
+import { loginUser } from "@/firebase/loginUser";
 
 export default function Login() {
   const router = useRouter();
@@ -20,38 +14,22 @@ export default function Login() {
   const [inputEmailValue, setinputEmailValue] = useState("");
   const [inputPasswordValue, setinputPasswordValue] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<string | null>("");
   const [user, setUser] = useState<User | null>(null);
   async function validateEmail(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const auth = getAuth(app);
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        inputEmailValue,
-        inputPasswordValue
-      );
-      const loggedUser = userCredential.user;
-      setUser(loggedUser);
-
-      if (loggedUser.emailVerified) {
-        setMessage("Usuário logado com sucesso!");
-        router.push("/");
-      } else {
-        setErrorMessage(
-          "E-mail não confirmado. Verifique sua caixa de entrada para confirmar o e-mail. "
-        );
-      }
-    } catch (error: unknown) {
-      if (error instanceof FirebaseError) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setErrorMessage(`${errorCode} - ${errorMessage}`);
-      } else {
-        setErrorMessage(
-          "Ocorreu um erro ao tentar realizar o login. Tente novamente."
-        );
-      }
+    const result = await loginUser(
+      inputEmailValue,
+      inputPasswordValue,
+      setUser
+    );
+    if (result.success) {
+      setMessage("Usuário logado com sucesso!");
+      router.push("/");
+      setErrorMessage(null);
+    } else {
+      setErrorMessage(result.message);
+      setMessage(null);
     }
   }
 
@@ -107,11 +85,18 @@ export default function Login() {
           </Link>
         </form>
 
-        {message && <p style={{ color: "green" }}>{message}</p>}
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        {message && <p className="success">{message}</p>}
+        {errorMessage && <p className="error">{errorMessage}</p>}
 
         {!user?.emailVerified && user && (
-          <button onClick={resendVerificationEmail}>Reenviar E-mail</button>
+          <Button
+            padding="14px"
+            fontSize="1rem"
+            className="hover_white"
+            onClick={resendVerificationEmail}
+          >
+            Enviar verificação
+          </Button>
         )}
 
         <Link href={"/registrar"}>

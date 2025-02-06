@@ -8,7 +8,7 @@ type IButton = {
   children: string | JSX.Element | JSX.Element[];
   padding?: string;
   fontSize?: string;
-  className: string;
+  className?: string;
   textTransform?: string | any;
 };
 

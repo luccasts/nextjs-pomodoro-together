@@ -1,13 +1,16 @@
 "use client";
 import { TimerContext } from "@/context/TimerContext";
 import { getTimer } from "@/utils/getDate";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./page.module.scss";
 
 import Loading from "../Loading";
 import Button from "../ui/button";
+import { savePomodoroSession } from "@/utils/savePomodoroSession";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Time() {
+  const { user } = useAuth();
   const {
     time,
     setTime,
@@ -17,11 +20,10 @@ export default function Time() {
     intervalRef,
     isStarButton,
     setIsStarButton,
+    activeTimerType,
   } = useContext(TimerContext);
   let { intervalID } = useContext(TimerContext);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // let intervalID: string | number | NodeJS.Timeout | null | undefined = null
-
+  const [startTime, setStartTime] = useState<number | null>(null);
   useEffect(() => {
     setTime(getTimer(timeInSeconds));
   }, [timeInSeconds]);
@@ -46,6 +48,7 @@ export default function Time() {
     intervalID = setInterval(countDown, 1000);
     intervalRef.current = intervalID;
     setIsStarButton(false);
+    setStartTime(Date.now());
   }
 
   function stopTimer() {
@@ -55,6 +58,13 @@ export default function Time() {
     clearInterval(intervalID as number);
     intervalRef.current = null;
     intervalID = null;
+    console.log(startTime, activeTimerType);
+    if (startTime && activeTimerType === "pomodoroTimer" && user?.uid) {
+      console.log("entered here -stoptimer-");
+      const studyTime = (Date.now() - startTime) / 1000; // Calcula tempo em segundos
+      savePomodoroSession(user.uid, Math.round(studyTime)); // Salva no Firebase
+      setStartTime(null);
+    }
   }
   return (
     <div>

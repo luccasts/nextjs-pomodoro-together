@@ -8,6 +8,9 @@
   .containerForm {
     background-color: var(--background-main-reset);
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    width: 800px;
+    min-width: 500px;
+
     padding: 2rem;
     border-radius: 0.5rem;
 
@@ -17,14 +20,8 @@
     gap: 1rem;
     flex-direction: column;
 
-    .success {
-      color: green;
-      margin-top: 1rem;
-    }
-
-    .error {
-      color: red;
-      margin-top: 1rem;
+    p {
+      text-align: center;
     }
 
     form {

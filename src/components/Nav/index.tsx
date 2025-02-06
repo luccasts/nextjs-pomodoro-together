@@ -16,7 +16,6 @@ export default function Nav() {
   const { setIsOpenModal, setIsOpenUserModal, isOpenUserModal } =
     useModalContext();
   const { user } = useAuth();
-
   function showUserModal() {
     setIsOpenUserModal(true);
     if (isOpenUserModal) {
