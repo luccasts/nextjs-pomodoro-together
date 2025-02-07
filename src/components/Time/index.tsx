@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./page.module.scss";
 
 import Loading from "../Loading";
-import Button from "../ui/button";
+import Button from "../ui/Button";
 import { savePomodoroSession } from "@/utils/savePomodoroSession";
 import { useAuth } from "@/context/AuthContext";
 

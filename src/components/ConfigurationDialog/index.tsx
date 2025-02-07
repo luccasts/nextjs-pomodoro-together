@@ -3,12 +3,12 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./page.module.scss";
 import { useModalContext } from "@/context/ModalContext";
 import { TimerContext } from "@/context/TimerContext";
-import { AiOutlineClose } from "react-icons/ai";
-import Button from "../ui/button";
+import Button from "../ui/Button";
+import Modal from "../ui/Modal";
 
-export default function Modal() {
+export default function ConfigurationDialog() {
   //Open / Close Modal
-  const { isOpenModal, setIsOpenModal } = useModalContext();
+  const { isTheModalOpen, setIsTheModalOpen } = useModalContext();
 
   //Timers
   const {
@@ -87,7 +87,7 @@ export default function Modal() {
       setLongTimer(secondsLongTimer);
       setTypeTimer("longTimer");
     }
-    setIsOpenModal(false);
+    setIsTheModalOpen(false);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -119,30 +119,17 @@ export default function Modal() {
   }
 
   return (
-    <div
-      className={styles.MainModal}
-      style={isOpenModal ? { display: "flex" } : { display: "none" }}
-    >
-      <div
-        className={styles.backgroundModal}
-        onClick={() => setIsOpenModal(false)}
-      ></div>
+    <Modal isTheModalOpen={isTheModalOpen} setIsTheModalOpen={setIsTheModalOpen}>
       <div className={styles.modal}>
-        <div className={styles.modal__div__buttonX}>
-          <button onClick={() => setIsOpenModal(false)}>
-            <AiOutlineClose />
-          </button>
+        <div className={styles.modal__title}>
+          <h1>Configurações</h1>
         </div>
-        <div className={styles.modal__div__form}>
-          <div className={styles.modal__div__form__title}>
-            <h1>Configurações</h1>
-          </div>
-          <div className={styles.modal__div__form__title}>
-            <h2>Temporizadores (em minutos)</h2>
-          </div>
-
-          <form>
-            <div className={styles.div__input}>
+        <div>
+          <h2>Temporizadores (em minutos)</h2>
+        </div>
+        <form className={styles.modal__form}>
+          <div className={styles.div__input}>
+            <div className={styles.input}>
               <label htmlFor="pomodoro">Pomodoro</label>
               <input
                 id="pomodoro"
@@ -152,7 +139,7 @@ export default function Modal() {
                 onChange={(v) => validateInput(v.target.value, "pomodoro")}
               />
             </div>
-            <div className={styles.div__input}>
+            <div className={styles.input}>
               <label htmlFor="shortTimer">Pausa Curta</label>
               <input
                 id="shortTimer"
@@ -162,7 +149,7 @@ export default function Modal() {
                 onChange={(v) => validateInput(v.target.value, "shortTimer")}
               />
             </div>
-            <div className={styles.div__input}>
+            <div className={styles.input}>
               <label htmlFor="longTimer">Pausa Longa</label>
               <input
                 id="longTimer"
@@ -172,20 +159,21 @@ export default function Modal() {
                 onChange={(v) => validateInput(v.target.value, "longTimer")}
               />
             </div>
-            <div className={styles.div__button}>
-              <Button
-                className="hover_transparent"
-                fontSize={"1rem"}
-                padding={"0.5rem .8rem"}
-                onClick={(e) => handleSetTimer(e)}
-                disabled={isDisabled}
-              >
-                Aplicar
-              </Button>
-            </div>
-          </form>
-        </div>
+          </div>
+
+          <div className={styles.div__button}>
+            <Button
+              className="hover_transparent"
+              fontSize={"1rem"}
+              padding={"0.5rem .8rem"}
+              onClick={(e) => handleSetTimer(e)}
+              disabled={isDisabled}
+            >
+              Aplicar
+            </Button>
+          </div>
+        </form>
       </div>
-    </div>
+    </Modal>
   );
 }

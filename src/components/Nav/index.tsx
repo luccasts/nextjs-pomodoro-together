@@ -13,18 +13,30 @@ import { useAuth } from "@/context/AuthContext";
 import UserModal from "../UserModal";
 
 export default function Nav() {
-  const { setIsOpenModal, setIsOpenUserModal, isOpenUserModal } =
-    useModalContext();
+  const {
+    setIsTheModalOpen,
+    setIsTheUserModalOpen,
+    isTheUserModalOpen,
+    isTheStudyReportModalOpen,
+    setIsTheStudyReportOpen,
+  } = useModalContext();
   const { user } = useAuth();
   function showUserModal() {
-    setIsOpenUserModal(true);
-    if (isOpenUserModal) {
-      setIsOpenUserModal(false);
+    setIsTheUserModalOpen(true);
+    if (isTheUserModalOpen) {
+      setIsTheUserModalOpen(false);
+    }
+  }
+
+  function showStudyReportyModal() {
+    setIsTheStudyReportOpen(true);
+    if (isTheStudyReportModalOpen) {
+      setIsTheStudyReportOpen(false);
     }
   }
 
   function showModal() {
-    setIsOpenModal(true);
+    setIsTheModalOpen(true);
   }
 
   return (
@@ -39,7 +51,10 @@ export default function Nav() {
             <FaUserFriends />
             Amigos
           </li>
-          <li className={styles.liSlowHover}>
+          <li
+            className={styles.liSlowHover}
+            onClick={() => showStudyReportyModal()}
+          >
             <HiDocumentReport />
             Relatório
           </li>
@@ -60,7 +75,7 @@ export default function Nav() {
                 </li>
               </div>
               <div className={styles.userModalAbsolute}>
-                {isOpenUserModal ? <UserModal /> : ""}
+                {isTheUserModalOpen ? <UserModal /> : ""}
               </div>
             </div>
           ) : (

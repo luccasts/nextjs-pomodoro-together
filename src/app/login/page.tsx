@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import styles from "./page.module.scss";
-import Input from "@/components/ui/input";
-import Button from "@/components/ui/button";
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
 import { loginUser } from "@/firebase/loginUser";
 
 export default function Login() {
@@ -92,7 +92,7 @@ export default function Login() {
           <Button
             padding="14px"
             fontSize="1rem"
-            className="hover_white"
+            className="hover_transparent"
             onClick={resendVerificationEmail}
           >
             Enviar verificação

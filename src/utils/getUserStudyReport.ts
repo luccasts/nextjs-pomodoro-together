@@ -21,13 +21,15 @@ export async function getUserStudyReport(
       sessionsRef,
       where("date", ">=", period === "weekly" ? lastWeekDate : today)
     );
+
     const querySnapshot = await getDocs(q);
+
     const studyData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
-    console.log("📌 Registros encontrados:", studyData);
+    // console.log("📌 Registros encontrados:", studyData);
     return studyData;
   } catch (error) {
     console.error("Erro ao buscar o relatório de estudo:", error);

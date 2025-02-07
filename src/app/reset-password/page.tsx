@@ -1,8 +1,8 @@
 "use client";
 import { FormEvent, useState } from "react";
 import styles from "./page.module.scss";
-import Button from "@/components/ui/button";
-import Input from "@/components/ui/input";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 import { resetPasswordUser } from "@/firebase/resetPasswordUser";
 
 export default function ResetPassoword() {

@@ -11,9 +11,9 @@ export async function loginUser(email: string, password: string, setUser: any) {
       password
     );
     const loggedUser = userCredential.user;
-    setUser(loggedUser);
 
     if (loggedUser.emailVerified) {
+      setUser(loggedUser);
       return {
         success: true,
         message: "Usuário logado com sucesso!",

@@ -1,0 +1,56 @@
+  .modal {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    h2 {
+      padding: 1rem;
+    }
+
+    h1 {
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      border-bottom: 1px solid rgb(220, 220, 220);
+    }
+
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+
+      .div__button {
+        display: flex;
+        justify-content: center;
+
+        gap: .5rem;
+      }
+
+      .div__input {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .5rem;
+
+        .input {
+          display: flex;
+          flex-direction: column;
+
+
+          gap: 0.2rem;
+
+          input {
+            background-color: var(--background-config-modal-input);
+            color: var(--color-config-modal-input);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.8rem;
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }

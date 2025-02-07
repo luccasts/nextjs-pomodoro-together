@@ -1,5 +1,5 @@
 "use client";
-import StudyReport from "@/components/Reports";
+import StudyReport from "@/components/StudyReport";
 
 import { useAuth } from "@/context/AuthContext";
 

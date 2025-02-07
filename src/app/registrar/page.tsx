@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import styles from "./page.module.scss";
-import Button from "@/components/ui/button";
-import Input from "@/components/ui/input";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 import { registerUser } from "@/firebase/registerUser";
 
 export default function Registrar() {

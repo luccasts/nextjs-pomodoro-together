@@ -3,7 +3,7 @@ import { TimerContext } from "@/context/TimerContext";
 import { useContext } from "react";
 import Timers from "../Timers";
 import styles from "./page.module.scss";
-import Button from "../ui/button";
+import Button from "../ui/Button";
 
 export default function Main() {
   const { setTypeTimer, intervalRef } = useContext(TimerContext);
