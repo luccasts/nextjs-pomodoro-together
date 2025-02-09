@@ -16,6 +16,7 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>("");
   const [user, setUser] = useState<User | null>(null);
+  console.log(user);
   async function validateEmail(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const result = await loginUser(
@@ -28,6 +29,10 @@ export default function Login() {
       router.push("/");
       setErrorMessage(null);
     } else {
+      if (result.auth) {
+        setUser(result.auth.currentUser);
+      }
+      console.log();
       setErrorMessage(result.message);
       setMessage(null);
     }
@@ -35,6 +40,7 @@ export default function Login() {
 
   async function resendVerificationEmail() {
     if (user) {
+      console.log(user + "user");
       try {
         await sendEmailVerification(user);
         setMessage("E-mail de verificação reenviado com sucesso!");

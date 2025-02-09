@@ -23,6 +23,7 @@ export async function loginUser(email: string, password: string, setUser: any) {
         success: false,
         message:
           "E-mail não confirmado. Verifique sua caixa de entrada para confirmar o e-mail. ",
+        auth: auth,
       };
     }
   } catch (error: unknown) {

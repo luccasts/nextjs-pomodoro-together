@@ -15,7 +15,6 @@ export default function Home() {
   if (loading) {
     return <Loading />;
   }
-  console.log(user?.uid);
   return (
     <ModalProvider>
       <TimerProvider>

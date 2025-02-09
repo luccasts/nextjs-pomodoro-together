@@ -26,7 +26,11 @@ export async function savePomodoroSession(
 
     // Buscar documento da sessão do dia
     const sessionDoc = await getDoc(sessionDocRef);
-
+    const now = new Date();
+    const utcDate = new Date(
+      Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
+    ); // Data sem horário em UTC
+    const timezoneOffset = now.getTimezoneOffset(); // Diferença em minutos do UTC
     if (sessionDoc.exists()) {
       // Se já existe uma sessão para o dia, apenas atualiza o tempo de estudo
       await updateDoc(sessionDocRef, {
@@ -37,9 +41,10 @@ export async function savePomodoroSession(
       // Se não existe, cria um novo documento de sessão para o dia
       await setDoc(sessionDocRef, {
         userId,
-        date: today,
+        date: Timestamp.fromDate(utcDate), // Salva a data em UTC
+        timezoneOffset, // Salva o fuso do usuário em minutos
         studyTime: studyDuration,
-        sessions: [studyDuration], // Armazena as sessões do dia em um array
+        sessions: [studyDuration],
         createdAt: Timestamp.now(),
       });
     }

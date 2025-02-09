@@ -17,5 +17,5 @@ export default function Profile() {
     );
   }
 
-  return <StudyReport userId={user.uid} />;
+  return <div>Usuário Logado! {user.email}</div>;
 }

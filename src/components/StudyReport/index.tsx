@@ -41,9 +41,14 @@ export default function StudyReport({ userId }: StudyReportProps) {
         const completeWeek = generateCompleteWeek();
         if (period === "weekly") {
           const convertedData = completeWeek.map((day) => {
-            const studySession = data.find(
-              (session) => session.date === day.date
-            );
+            const studySession = data.find((session) => {
+              const sessionDate = session.date
+                .toDate()
+                .toISOString()
+                .split("T")[0]; // Converte Timestamp para YYYY-MM-DD
+              return sessionDate === day.date;
+            });
+
             return {
               date: day.date,
               studyTime: studySession
@@ -75,7 +80,9 @@ export default function StudyReport({ userId }: StudyReportProps) {
     const daysOfWeek = [];
     const today = new Date();
     const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay() - 1); // Começa no domingo
+
+    startOfWeek.setDate(today.getDate() - 6); // Começa há 6 dias atrás, incluindo hoje
+
     for (let i = 0; i < 7; i++) {
       const day = new Date(startOfWeek);
       day.setDate(startOfWeek.getDate() + i);
