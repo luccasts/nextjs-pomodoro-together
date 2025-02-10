@@ -52,7 +52,6 @@ export async function getUserStudyReport(
         sessions: Array.isArray(data.sessions) ? data.sessions : [], // Garante que seja um array
       };
     });
-    console.log(studyData);
     return studyData;
   } catch (error) {
     console.error("Erro ao buscar o relatório de estudo:", error);

@@ -19,6 +19,10 @@ export default function ConfigurationDialog() {
     shortTimer,
     setShortTimer,
     setTypeTimer,
+    setUserLongBreakInterval,
+    userLongBreakInterval,
+    setLongBreakInterval,
+    longBreakInterval,
   } = useContext(TimerContext);
 
   //pomodoro
@@ -32,6 +36,12 @@ export default function ConfigurationDialog() {
   //longTimer
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [longTimerInputValue, setLongTimerInputValue]: any = useState();
+
+  const [
+    userLongBreakIntervalInputValue,
+    setUserLongBreakIntervalInputValue,
+  ]: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  any = useState();
 
   //form button
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,6 +66,9 @@ export default function ConfigurationDialog() {
     );
     setShortTimerInputValue(handleTimeInMinutesOrSeconds(shortTimer, "divide"));
     setLongTimerInputValue(handleTimeInMinutesOrSeconds(longTimer, "divide"));
+    if (userLongBreakIntervalInputValue === undefined) {
+      return setUserLongBreakIntervalInputValue(longBreakInterval);
+    }
   }, []);
 
   function handleSetTimer(v: MouseEvent) {
@@ -73,7 +86,6 @@ export default function ConfigurationDialog() {
       "multiplication"
     );
     if (secondsPomodoro !== pomodoroTimer) {
-      console.log("diferente pomodoro");
       setPomodoroTimer(secondsPomodoro);
       setTypeTimer("pomodoroTimer");
     }
@@ -86,6 +98,10 @@ export default function ConfigurationDialog() {
     if (secondsLongTimer !== longTimer) {
       setLongTimer(secondsLongTimer);
       setTypeTimer("longTimer");
+    }
+    if (userLongBreakIntervalInputValue !== userLongBreakInterval) {
+      setLongBreakInterval(userLongBreakIntervalInputValue);
+      setUserLongBreakInterval(userLongBreakIntervalInputValue);
     }
     setIsTheModalOpen(false);
   }
@@ -119,7 +135,10 @@ export default function ConfigurationDialog() {
   }
 
   return (
-    <Modal isTheModalOpen={isTheModalOpen} setIsTheModalOpen={setIsTheModalOpen}>
+    <Modal
+      isTheModalOpen={isTheModalOpen}
+      setIsTheModalOpen={setIsTheModalOpen}
+    >
       <div className={styles.modal}>
         <div className={styles.modal__title}>
           <h1>Configurações</h1>
@@ -128,7 +147,7 @@ export default function ConfigurationDialog() {
           <h2>Temporizadores (em minutos)</h2>
         </div>
         <form className={styles.modal__form}>
-          <div className={styles.div__input}>
+          <div className={styles.div__pomodoro__input}>
             <div className={styles.input}>
               <label htmlFor="pomodoro">Pomodoro</label>
               <input
@@ -160,7 +179,19 @@ export default function ConfigurationDialog() {
               />
             </div>
           </div>
-
+          <div className={styles.div__longBreakInterval__input}>
+            <div className={styles.input}>
+              <label htmlFor="longBreakInterval">Intervalo longa pausa</label>
+              <input
+                id="longBreakInterval"
+                type="number"
+                value={userLongBreakIntervalInputValue}
+                onChange={(v) =>
+                  setUserLongBreakIntervalInputValue(v.target.value)
+                }
+              />
+            </div>
+          </div>
           <div className={styles.div__button}>
             <Button
               className="hover_transparent"

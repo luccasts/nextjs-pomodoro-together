@@ -21,7 +21,16 @@
     &__form {
       display: flex;
       flex-direction: column;
-      gap: .5rem;
+      gap: 1rem;
+
+      input {
+        background-color: var(--background-config-modal-input);
+        color: var(--color-config-modal-input);
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.8rem;
+        font-size: 1rem;
+      }
 
       .div__button {
         display: flex;
@@ -30,26 +39,25 @@
         gap: .5rem;
       }
 
-      .div__input {
+      .div__pomodoro__input {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .5rem;
+      }
+
+      .input {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .div__longBreakInterval__input {
         display: flex;
         flex-wrap: wrap;
         gap: .5rem;
 
-        .input {
-          display: flex;
-          flex-direction: column;
-
-
-          gap: 0.2rem;
-
-          input {
-            background-color: var(--background-config-modal-input);
-            color: var(--color-config-modal-input);
-            border: none;
-            border-radius: 0.5rem;
-            padding: 0.8rem;
-            font-size: 1rem;
-          }
+        input {
+          width: 50%;
         }
       }
     }

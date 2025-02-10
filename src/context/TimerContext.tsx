@@ -31,6 +31,8 @@ export default function TimerProvider({ children }: any) {
   >("pomodoroTimer");
   // eslint-disable-next-line prefer-const
   let intervalID: string | number | NodeJS.Timeout | null | undefined = null;
+  const [userLongBreakInterval, setUserLongBreakInterval] = useState(null);
+  const [longBreakInterval, setLongBreakInterval] = useState(3);
   return (
     <TimerContext.Provider
       value={{
@@ -55,6 +57,10 @@ export default function TimerProvider({ children }: any) {
         setIsStarButton,
         activeTimerType,
         setActiveTimerType,
+        setLongBreakInterval,
+        longBreakInterval,
+        userLongBreakInterval,
+        setUserLongBreakInterval,
       }}
     >
       {children}
