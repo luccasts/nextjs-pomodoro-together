@@ -1,15 +1,20 @@
 "use client";
-import StudyReport from "@/components/StudyReport";
-
 import { useAuth } from "@/context/AuthContext";
-
+import styles from "./page.module.scss";
 export default function Profile() {
   const { user } = useAuth();
   if (!user) {
     return (
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <h1
-          style={{ color: "#ee6b6e", fontSize: 18, textTransform: "uppercase" }}
+          style={{ color: "#ee6b6e", fontSize: 38, textTransform: "uppercase" }}
         >
           Necessita estar logado para acessar essa página.
         </h1>
@@ -17,5 +22,22 @@ export default function Profile() {
     );
   }
 
-  return <div>Usuário Logado! {user.email}</div>;
+  return (
+    <main className={styles.main}>
+      <section>
+        <h1>Informações de Perfil</h1>
+        <p>
+          E-Mail: {user.email} <span>Editar</span>
+        </p>
+        <p>
+          {user.displayName ? user.displayName : "VC NÃO TEM NOME "}
+          <span>Editar</span>
+        </p>
+        <p>
+          {user.photoURL ? user.photoURL : "VOCê NÃO TEM FOTO DE PERFIL "}
+          <span>Editar</span>
+        </p>
+      </section>
+    </main>
+  );
 }

@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import Modal from "../ui/Modal";
 import { useModalContext } from "@/context/ModalContext";
+import { Timestamp } from "firebase/firestore";
 
 interface StudySession {
   id: string;
@@ -30,6 +31,7 @@ export default function StudyReport({ userId }: StudyReportProps) {
 
   const { isTheStudyReportModalOpen, setIsTheStudyReportOpen } =
     useModalContext();
+
   useEffect(() => {
     async function fetchData() {
       if (!userId) return;
@@ -37,15 +39,16 @@ export default function StudyReport({ userId }: StudyReportProps) {
       try {
         const data: StudySession[] = await getUserStudyReport(userId, period);
 
-        // Gerar a semana completa
         const completeWeek = generateCompleteWeek();
+
         if (period === "weekly") {
           const convertedData = completeWeek.map((day) => {
             const studySession = data.find((session) => {
-              const sessionDate = session.date
-                .toDate()
-                .toISOString()
-                .split("T")[0]; // Converte Timestamp para YYYY-MM-DD
+              const sessionDate =
+                session.date instanceof Timestamp
+                  ? session.date.toDate().toISOString().split("T")[0] // Converte Timestamp para YYYY-MM-DD
+                  : session.date; // Se já for string YYYY-MM-DD, mantém como está
+
               return sessionDate === day.date;
             });
 
@@ -58,9 +61,13 @@ export default function StudyReport({ userId }: StudyReportProps) {
           });
 
           setReport(convertedData);
-        } else if (period == "daily") {
+        } else if (period === "daily") {
           const convertedData = data.map((session) => ({
-            ...session, // Mantém id e date
+            id: session.id,
+            date:
+              session.date instanceof Timestamp
+                ? session.date.toDate().toISOString().split("T")[0]
+                : session.date, // Garante que sempre teremos um YYYY-MM-DD
             studyTime: Number((session.studyTime / 60).toFixed(1)), // Convertendo para minutos
           }));
           setReport(convertedData);
@@ -80,7 +87,6 @@ export default function StudyReport({ userId }: StudyReportProps) {
     const daysOfWeek = [];
     const today = new Date();
     const startOfWeek = new Date(today);
-
     startOfWeek.setDate(today.getDate() - 6); // Começa há 6 dias atrás, incluindo hoje
 
     for (let i = 0; i < 7; i++) {
@@ -105,21 +111,7 @@ export default function StudyReport({ userId }: StudyReportProps) {
       return minutes === 0 ? `${hours}h` : `${hours}h ${minutes}m`; // Exibe horas e minutos
     }
   };
-  const generateLastSixDays = () => {
-    const days = [];
-    const today = new Date();
 
-    for (let i = 6; i >= 0; i--) {
-      const day = new Date(today);
-      day.setDate(today.getDate() - i);
-      days.push({
-        date: day.toISOString().split("T")[0], // Formato YYYY-MM-DD
-        studyTime: 0, // Tempo zerado
-      });
-    }
-
-    return days;
-  };
   return (
     <Modal
       isTheModalOpen={isTheStudyReportModalOpen}
@@ -142,12 +134,13 @@ export default function StudyReport({ userId }: StudyReportProps) {
             📆 Semanal
           </button>
         </div>
+
         {userId ? null : (
           <div>
             <h3>Precisa estar logado para registrar o tempo.</h3>
             <div className={styles.chartContainer}>
               <ResponsiveContainer width="100%" height={400}>
-                <BarChart data={generateLastSixDays()}>
+                <BarChart data={generateCompleteWeek()}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" />
                   <YAxis tickFormatter={formatStudyTime} />
@@ -160,6 +153,7 @@ export default function StudyReport({ userId }: StudyReportProps) {
             </div>
           </div>
         )}
+
         {userId && loading ? (
           <p>Carregando...</p>
         ) : report.length > 0 ? (
@@ -169,7 +163,6 @@ export default function StudyReport({ userId }: StudyReportProps) {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <YAxis tickFormatter={formatStudyTime} />
-                {/* Formatar valores do eixo Y */}
                 <Tooltip
                   formatter={(value) => formatStudyTime(value as number)}
                 />
@@ -178,7 +171,7 @@ export default function StudyReport({ userId }: StudyReportProps) {
             </ResponsiveContainer>
           </div>
         ) : (
-          <p>🚀 Nenhum estudo registrado.</p>
+          <p>🚀 Nenhum estudo registradoAAA.</p>
         )}
       </div>
     </Modal>

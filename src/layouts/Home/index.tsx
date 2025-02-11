@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 import Loading from "@/components/Loading";
 import ConfigurationDialog from "@/components/ConfigurationDialog";
 import StudyReport from "@/components/StudyReport";
+import DisplayNameDialog from "@/components/DiplayNameDialog";
 
 export default function Home() {
   const { loading, user } = useAuth();
@@ -15,6 +16,7 @@ export default function Home() {
   if (loading) {
     return <Loading />;
   }
+  console.log(user);
   return (
     <ModalProvider>
       <TimerProvider>
@@ -23,6 +25,7 @@ export default function Home() {
         {/* <Modal /> */}
         <ConfigurationDialog />
         <StudyReport userId={user?.uid} />
+        {user?.displayName ? null : <DisplayNameDialog />}
       </TimerProvider>
     </ModalProvider>
   );

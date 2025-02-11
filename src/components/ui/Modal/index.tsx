@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 type IModal = {
-  children: JSX.Element;
+  children?: JSX.Element;
   isTheModalOpen: boolean | ModalContextProps;
   setIsTheModalOpen: Dispatch<SetStateAction<boolean>>;
 };

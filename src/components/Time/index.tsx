@@ -42,13 +42,11 @@ export default function Time() {
         if (longBreakInterval === 0) {
           stopTimer();
           setTypeTimer("longTimer");
-          setLongBreakInterval(userLongBreakInterval);
-          return console.log(
-            longBreakInterval,
-            "resetou",
-            "UserlongBreakInterval: ",
-            userLongBreakInterval
-          );
+          if (userLongBreakInterval) {
+            return setLongBreakInterval(userLongBreakInterval);
+          } else {
+            return setLongBreakInterval(3);
+          }
         }
         longBreakInterval > 0
           ? setLongBreakInterval(longBreakInterval - 1)

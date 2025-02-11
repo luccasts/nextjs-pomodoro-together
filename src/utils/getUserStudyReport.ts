@@ -30,7 +30,8 @@ export async function getUserStudyReport(
 
     // Caminho correto para a coleção
     const sessionsRef = collection(db, "studySessions", userId, "sessions");
-
+    // console.log(todayTimestamp, "todayTimesStamp");
+    // console.log(sessionsRef, " sessionRef");
     // Criando a query correta com Timestamp
     const q = query(
       sessionsRef,
@@ -40,11 +41,14 @@ export async function getUserStudyReport(
         period === "weekly" ? lastWeekTimestamp : todayTimestamp
       )
     );
+
+    // console.log(q, "q");
     const querySnapshot = await getDocs(q);
 
     // Mapeando os dados retornados e garantindo que os valores existam
     const studyData = querySnapshot.docs.map((doc) => {
       const data = doc.data();
+      console.log(data);
       return {
         id: doc.id,
         studyTime: data.studyTime || 0, // Garante que sempre há um valor numérico
