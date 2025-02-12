@@ -16,13 +16,19 @@ export async function savePomodoroSession(
   if (!userId || studyDuration <= 0) return;
 
   try {
-    const today = new Date().toISOString().split("T")[0]; // Formato YYYY-MM-DD
+    // const today = new Date().toISOString().split("T")[0]; // Formato YYYY-MM-DD
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Garante que estamos pegando só a data, sem horário
+    const localDateString = today.toLocaleDateString("sv-SE"); // ✅ Formato YYYY-MM-DD no fuso do usuário
 
     // Referência do documento do usuário dentro da coleção "studySessions"
     const userDocRef = doc(db, "studySessions", userId);
 
     // Referência do documento de sessão do dia dentro da subcoleção "sessions"
-    const sessionDocRef = doc(collection(userDocRef, "sessions"), today);
+    const sessionDocRef = doc(
+      collection(userDocRef, "sessions"),
+      localDateString
+    );
 
     // Buscar documento da sessão do dia
     const sessionDoc = await getDoc(sessionDocRef);

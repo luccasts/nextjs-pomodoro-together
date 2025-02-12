@@ -9,14 +9,22 @@ import Loading from "@/components/Loading";
 import ConfigurationDialog from "@/components/ConfigurationDialog";
 import StudyReport from "@/components/StudyReport";
 import DisplayNameDialog from "@/components/DiplayNameDialog";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const { loading, user } = useAuth();
-
+  const [openDisplayNameDialog, setOpenDisplayNameDialog] = useState(false);
+  useEffect(() => {
+    if (user) {
+      if (!user?.displayName) {
+        return setOpenDisplayNameDialog(true);
+      }
+    }
+  }, [user]);
   if (loading) {
     return <Loading />;
   }
-  console.log(user);
+
   return (
     <ModalProvider>
       <TimerProvider>
@@ -25,7 +33,7 @@ export default function Home() {
         {/* <Modal /> */}
         <ConfigurationDialog />
         <StudyReport userId={user?.uid} />
-        {user?.displayName ? null : <DisplayNameDialog />}
+        {openDisplayNameDialog ? <DisplayNameDialog /> : null}
       </TimerProvider>
     </ModalProvider>
   );

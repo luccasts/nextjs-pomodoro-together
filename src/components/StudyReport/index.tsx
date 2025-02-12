@@ -161,19 +161,26 @@ export default function StudyReport({ userId }: StudyReportProps) {
             <ResponsiveContainer width="100%" height={400}>
               <BarChart data={report}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
+                <XAxis color="#000" dataKey="date" />
                 <YAxis tickFormatter={formatStudyTime} />
                 <Tooltip
+                  wrapperStyle={{ color: "#8884d8" }}
                   formatter={(value) => formatStudyTime(value as number)}
                 />
-                <Bar dataKey="studyTime" fill="#8884d8" />
+
+                <Bar
+                  name="Tempo de Estudo"
+                  dataKey="studyTime"
+                  fill="#8884d8"
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>
         ) : (
-          <p>🚀 Nenhum estudo registradoAAA.</p>
+          <p>🚀 Nenhum estudo registrado.</p>
         )}
       </div>
     </Modal>
   );
 }
+//#8884d8
