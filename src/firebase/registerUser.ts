@@ -1,7 +1,9 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
+
 import { FirebaseError } from "firebase/app";
+import { supabase } from "@/lib/supabase";
 
 export async function registerUser(email: string, password: string) {
   try {
@@ -15,8 +17,26 @@ export async function registerUser(email: string, password: string) {
     // Salva os dados do usuário no Firestore
     await setDoc(doc(db, "users", user.uid), {
       uid: user.uid,
+      email: email,
       createdAt: new Date(),
     });
+
+    // Criar usuário no Supabase
+    const { data, error } = await supabase.from("users").insert([
+      {
+        id: user.uid, // Usamos o mesmo UID do Firebase
+        email: email,
+        avatar: null, // Pode ser atualizado depois
+        created_at: new Date(),
+      },
+    ]);
+
+    if (error) {
+      console.error("Erro ao inserir no Supabase:", error);
+      throw new Error("Erro ao sincronizar usuário no Supabase.");
+    }
+
+    console.log("Usuário sincronizado no Supabase:", data);
 
     return { success: true, message: "Usuário registrado com sucesso!" };
   } catch (error: unknown) {

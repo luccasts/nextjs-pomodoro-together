@@ -27,6 +27,7 @@ export default function Login() {
     if (result.success) {
       setMessage("Usuário logado com sucesso!");
       router.push("/");
+      router.refresh();
       setErrorMessage(null);
     } else {
       if (result.auth) {
