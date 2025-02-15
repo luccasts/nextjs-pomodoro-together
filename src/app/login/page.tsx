@@ -6,7 +6,8 @@ import { FormEvent, useState } from "react";
 import styles from "./page.module.scss";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
-import { loginUser } from "@/firebase/loginUser";
+import { loginUser } from "@/lib/firebase/loginUser";
+import { authSupabase } from "@/lib/supabase/authSupabase";
 
 export default function Login() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>("");
   const [user, setUser] = useState<User | null>(null);
-  console.log(user);
+
   async function validateEmail(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const result = await loginUser(
@@ -26,6 +27,7 @@ export default function Login() {
     );
     if (result.success) {
       setMessage("Usuário logado com sucesso!");
+      await authSupabase();
       router.push("/");
       router.refresh();
       setErrorMessage(null);

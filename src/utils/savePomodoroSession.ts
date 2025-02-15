@@ -6,7 +6,7 @@ import {
   Timestamp,
   collection,
 } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../lib/firebase/client";
 
 // Salva ou atualiza o tempo estudado no Firestore
 export async function savePomodoroSession(

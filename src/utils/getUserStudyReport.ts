@@ -5,7 +5,7 @@ import {
   getDocs,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../lib/firebase/client";
 
 export async function getUserStudyReport(
   userId: string,

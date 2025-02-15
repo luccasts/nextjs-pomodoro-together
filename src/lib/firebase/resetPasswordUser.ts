@@ -1,5 +1,5 @@
 import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth } from "./client";
 import { FirebaseError } from "firebase/app";
 
 export async function resetPasswordUser(email: string) {

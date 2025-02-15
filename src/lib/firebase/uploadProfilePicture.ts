@@ -1,16 +1,7 @@
-import { supabase } from "@/lib/supabase";
-const listBuckets = async () => {
-  const { data, error } = await supabase.storage.listBuckets();
-  if (error) {
-    console.error("Erro ao listar buckets:", error);
-  } else {
-    console.log("Buckets encontrados:", data);
-  }
-};
+import { supabase } from "@/lib/supabase/client";
+
 export const uploadProfilePicture = async (file: File, userId: string) => {
   const fileName = `${crypto.randomUUID()}.${file.type.split("/")[1]}`;
-
-  listBuckets();
 
   const { data, error } = await supabase.storage
     .from("avatars")

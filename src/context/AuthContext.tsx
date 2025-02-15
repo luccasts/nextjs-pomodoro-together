@@ -8,7 +8,7 @@ import {
 } from "react";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth } from "../lib/firebase/client";
 
 // Context Type
 interface AuthContextProps {

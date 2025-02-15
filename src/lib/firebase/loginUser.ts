@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FirebaseError } from "firebase/app";
-import { auth } from "../../firebase";
+import { auth } from "./client";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export async function loginUser(email: string, password: string, setUser: any) {

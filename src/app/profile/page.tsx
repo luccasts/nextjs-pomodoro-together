@@ -1,7 +1,7 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
-import { uploadProfilePicture } from "@/firebase/uploadProfilePicture"; // Importa a função de upload
+import { uploadProfilePicture } from "@/lib/firebase/uploadProfilePicture"; // Importa a função de upload
 import styles from "./page.module.scss";
 
 export default function Profile() {
@@ -38,6 +38,7 @@ export default function Profile() {
 
     try {
       const imageUrl = await uploadProfilePicture(file, user.uid);
+
       if (imageUrl) {
         setProfileImage(imageUrl); // Atualiza a imagem na tela
       }

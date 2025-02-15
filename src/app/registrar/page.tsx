@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import styles from "./page.module.scss";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import { registerUser } from "@/firebase/registerUser";
+import { registerUser } from "@/lib/firebase/registerUser";
 
 export default function Registrar() {
   const [inputEmailValue, setInputEmailValue] = useState("");

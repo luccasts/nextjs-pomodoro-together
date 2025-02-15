@@ -3,7 +3,7 @@ import { FormEvent, useState } from "react";
 import styles from "./page.module.scss";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import { resetPasswordUser } from "@/firebase/resetPasswordUser";
+import { resetPasswordUser } from "@/lib/firebase/resetPasswordUser";
 
 export default function ResetPassoword() {
   const [inputEmailValue, setinputEmailValue] = useState("");
